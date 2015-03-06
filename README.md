@@ -73,8 +73,8 @@ events.
 
 ### event.hasConsumer
 
-Returns `true | false`, indicating whether or not the event has a consumer. This will 
-also return true if there is an outstanding promise.
+Property containing value `true` or `false`, indicating whether or not the event has a 
+consumer. This will also return true if there is an outstanding promise.
 
 ## testing
 
