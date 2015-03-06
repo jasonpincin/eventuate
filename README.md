@@ -71,6 +71,10 @@ the `Promise` representing the next event will be resolved with `data`.
 Remove the formerly added `consumer`, so that it will not be called with future produced 
 events.
 
+### event.hasConsumer
+
+Returns `true | false`, indicating whether or not the event has a consumer. This will 
+also return true if there is an outstanding promise.
 
 ## testing
 
