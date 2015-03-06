@@ -7,6 +7,7 @@
 
 Handle events without emitters. If we had to do it all over again, we might do it this way...
 
+
 ## example
 
 ```javascript
@@ -37,6 +38,7 @@ request.produce({ url: '/test' })
 // remove our consumer
 request.remove(onRequest)
 ```
+
 
 ## api
 
@@ -76,12 +78,21 @@ events.
 Property containing value `true` or `false`, indicating whether or not the event has a 
 consumer. This will also return true if there is an outstanding promise.
 
+
+## install
+
+```sh
+npm install eventuate
+```
+
+
 ## testing
 
 `npm test [--dot | --spec] [--grep=pattern]`
 
 Specifying `--dot` or `--spec` will change the output from the default TAP style. 
 Specifying `--grep` will only run the test files that match the given pattern.
+
 
 ## coverage
 
