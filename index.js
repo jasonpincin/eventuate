@@ -18,7 +18,7 @@ module.exports = function mkEventuate () {
         consumers.splice(consumers.indexOf(consumer), 1)
     }
     eventuate.produce = function (data) {
-        consumers.forEach(function (consume) {
+        consumers.forEach(function eventuateConsume(consume) {
             consume(data)
         })
         if (_nextEvent) {
