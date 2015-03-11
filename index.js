@@ -2,7 +2,7 @@ var Promise = require('promise-polyfill')
 
 module.exports = function mkEventuate (options) {
     options = options || {}
-    options.monitorConsumers = options.monitorConsumers === undefined ? false : options.monitorConsumers
+    options.monitorConsumers = options.monitorConsumers === undefined ? true : options.monitorConsumers
 
     var nextEvent  = null,
         _nextEvent = null,
