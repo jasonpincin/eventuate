@@ -24,7 +24,7 @@ module.exports = function mkEventuate (options) {
         if (!consumer)
             return nextEvent
     }
-    eventuate.remove = function (consumer) {
+    eventuate.removeConsumer = function (consumer) {
         consumers.splice(consumers.indexOf(consumer), 1)
         if (monitored)
             eventuate.consumerRemoved.produce(consumer)

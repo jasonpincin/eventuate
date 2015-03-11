@@ -14,7 +14,7 @@ test('consumer removed', function (t) {
     event1.consumerRemoved().then(function (consumer) {
         t.equal(consumer, consumer1, 'should resolve as consumer')
     })
-    event1.remove(consumer1)
+    event1.removeConsumer(consumer1)
 
     var event2 = eventuate()
     event2.consumerRemoved(function (consumer) {
