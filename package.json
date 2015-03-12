@@ -11,7 +11,14 @@
     "type": "git",
     "url": "git://github.com/jasonpincin/eventuate.git"
   },
-  "keywords": [],
+  "keywords": [
+    "event",
+    "emitter",
+    "handler",
+    "callback",
+    "EventEmitter",
+    "Promise"
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/jasonpincin/eventuate/issues"
