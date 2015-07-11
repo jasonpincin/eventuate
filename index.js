@@ -30,6 +30,8 @@ module.exports = function mkEventuate (options) {
             eventuate.consumerRemoved.produce(consumer)
     }
     eventuate.produce = function (data) {
+        if (options.requireConsumption && !eventuate.hasConsumer)
+            throw ((data instanceof Error) ? data : new Error(data))
         consumers.forEach(function eventuateConsume(consume) {
             consume(data)
         })
