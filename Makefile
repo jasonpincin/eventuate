@@ -26,7 +26,7 @@ endif
 lint:
 	@jshint --exclude '**/{coverage,node_modules}/*' **/*.js
 
-test: node_modules
+test: 
 	$(if $(npm_config_grep), @echo "Running test files that match pattern: $(npm_config_grep)\n",)
 ifdef npm_config_dot
 	@make test-dot
@@ -38,13 +38,13 @@ else
 endif
 endif
 
-test-tap: node_modules
+test-tap: 
 	@find ./test -maxdepth 1 -name "*.js" -type f | grep ""$(npm_config_grep) | xargs $(BIN)/istanbul cover --report lcovonly --print none $(BIN)/tape --
 
-test-dot: node_modules
+test-dot: 
 	@make test-tap | $(BIN)/tap-dot
 
-test-spec: node_modules
+test-spec: 
 	@make test-tap | $(BIN)/tap-spec
 
 coverage:
@@ -64,11 +64,5 @@ coverage-html-report: coverage
 browse-coverage: coverage-html-report
 	@$(BIN)/opn coverage/index.html
 
-node_modules: package.json
-	@echo '# *** running "npm install" for you ***'
-	@npm install
-	@mkdir -p node_modules
-	@touch node_modules
-
 clean:
-	@rm -rf node_modules coverage
+	@rm -rf coverage
