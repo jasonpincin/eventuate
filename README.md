@@ -52,44 +52,36 @@ Create an object, `event`, that represents a consumable event type.
 
 Valid options are:
 
+* requireConsumption - throw an error if a produced event is not consumed, useful for error producers
 * monitorConsumers - [default: `true`] `true` or `false`, see "unmonitored eventuate" below
 
 ### event(consumer)
 
-Consume events with the `consumer` function, which should have the signature 
-`function (data) {}`. When an event is produced, it will be passed to the consumer 
-function as the first and only argument. 
+Consume events with the `consumer` function, which should have the signature `function (data) {}`. When an event is produced, it will be passed to the consumer function as the first and only argument. 
 
 When invoked this way, the return value of `event()` is undefined.
 
 ### var promise = event()
 
-When `event()` is invoked without a consumer, it returns a `Promise` object 
-representing the next produced event.
+When `event()` is invoked without a consumer, it returns a `Promise` object representing the next produced event.
 
 ### event.produce(data)
 
-Produce an event. All `event` consumer functions will be called with `data`, and 
-the `Promise` representing the next event will be resolved with `data`.
+Produce an event. All `event` consumer functions will be called with `data`, and the `Promise` representing the next event will be resolved with `data`. If the `requireConsumption` option was provided, and nothing consumes the data, an error will be thrown.
 
 ### event.removeConsumer(consumer)
 
-Remove the formerly added `consumer`, so that it will not be called with future produced 
-events.
+Remove the formerly added `consumer`, so that it will not be called with future produced events.
 
 ### event.hasConsumer
 
-Property containing value `true` or `false`, indicating whether or not the event has a 
-consumer. This will also return true if there is an outstanding promise.
+Property containing value `true` or `false`, indicating whether or not the event has a consumer. This will also return true if there is an outstanding promise.
 
 ### event.consumerAdded([consumer])
 
-Unmonitored eventuate representing additions of consumers. Any consumers of `consumerAdded` will be 
-invoked with the consumer added to the `eventuate`. As this is an eventuate itself, it will return a 
-promise that will resolve to the next consumer added if no `consumerAdded` consumer is provided.
+Unmonitored eventuate representing additions of consumers. Any consumers of `consumerAdded` will be invoked with the consumer added to the `eventuate`. As this is an eventuate itself, it will return a promise that will resolve to the next consumer added if no `consumerAdded` consumer is provided.
 
-If the consumer added to the `eventuate` was a promise, the consumer passed to the `consumerAdded` 
-consumer will be undefined.
+If the consumer added to the `eventuate` was a promise, the consumer passed to the `consumerAdded` consumer will be undefined.
 
 Example:
 
@@ -107,12 +99,9 @@ event.consumerAdded().then(function (eventConsumer) {
 
 ### event.consumerRemoved([consumer])
 
-Unmonitored eventuate representing removal of consumers. Any consumers of `consumerRemoved` will be 
-invoked with the consumer removed from the `eventuate`. As this is an eventuate itself, it will return a 
-promise that will resolve to the next consumer removed if no `consumerRemoved` consumer is provided.
+Unmonitored eventuate representing removal of consumers. Any consumers of `consumerRemoved` will be invoked with the consumer removed from the `eventuate`. As this is an eventuate itself, it will return a promise that will resolve to the next consumer removed if no `consumerRemoved` consumer is provided.
 
-If the consumer removed from the `eventuate` was a promise, the consumer passed to the `consumerRemoved` 
-consumer will be undefined.
+If the consumer removed from the `eventuate` was a promise, the consumer passed to the `consumerRemoved` consumer will be undefined.
 
 Example:
 
@@ -131,10 +120,7 @@ event.consumerRemoved().then(function (eventConsumer) {
 
 ## unmonitored eventuate
 
-If the eventuate is created with the option `monitorConsumers` set to false, the eventuate 
-will not have the following properties: `hasConsumer`, `consumerRemoved`, `consumerAdded`. 
-No events will be triggered when consumers are manipulated.  This is used internally within 
-eventuate for sub-events such as `consumerRemoved` and `consumerAdded`.
+If the eventuate is created with the option `monitorConsumers` set to false, the eventuate will not have the following properties: `hasConsumer`, `consumerRemoved`, `consumerAdded`.  No events will be triggered when consumers are manipulated.  This is used internally within eventuate for sub-events such as `consumerRemoved` and `consumerAdded`.
 
 
 ## install
