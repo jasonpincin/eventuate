@@ -23,8 +23,8 @@ ifdef npm_config_html
 	@make browse-coverage
 endif
 
-lint:
-	@jshint --exclude '**/{coverage,node_modules}/*' **/*.js
+lint:node_modules
+	@$(BIN)/jshint --exclude '**/{coverage,node_modules}/*' **/*.js
 
 test: 
 	$(if $(npm_config_grep), @echo "Running test files that match pattern: $(npm_config_grep)\n",)

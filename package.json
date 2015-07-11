@@ -1,6 +1,6 @@
 {
   "name": "eventuate",
-  "version": "1.0.2",
+  "version": "2.0.0",
   "description": "Handle events without emitters",
   "main": "index.js",
   "scripts": {
@@ -11,7 +11,14 @@
     "type": "git",
     "url": "git://github.com/jasonpincin/eventuate.git"
   },
-  "keywords": [],
+  "keywords": [
+    "event",
+    "emitter",
+    "handler",
+    "callback",
+    "EventEmitter",
+    "Promise"
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/jasonpincin/eventuate/issues"

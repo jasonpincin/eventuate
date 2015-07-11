@@ -23,4 +23,4 @@ assert(request.hasConsumer)
 request.produce({ url: '/test' })
 
 // remove our consumer
-request.remove(onRequest)
+request.removeConsumer(onRequest)
