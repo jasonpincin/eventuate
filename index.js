@@ -15,8 +15,8 @@ module.exports = function mkEventuate (options) {
         if (consumer)
             consumers.push(consumer)
         else
-            nextEvent = nextEvent || (nextEvent = new Promise(function (resolve,reject) {
-                _nextEvent = {resolve:resolve, reject:reject}
+            nextEvent = nextEvent || (nextEvent = new Promise(function (resolve, reject) {
+                _nextEvent = {resolve: resolve, reject: reject}
             }))
 
         if (monitored)
@@ -45,7 +45,7 @@ module.exports = function mkEventuate (options) {
         eventuate.consumerRemoved = mkEventuate({ monitorConsumers: false })
         eventuate.consumerAdded   = mkEventuate({ monitorConsumers: false })
 
-        Object.defineProperty(eventuate, "hasConsumer", {
+        Object.defineProperty(eventuate, 'hasConsumer', {
             get: function eventuateHasConsumer () {
                 return !!(nextEvent || consumers.length)
             }

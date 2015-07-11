@@ -31,14 +31,14 @@
   },
   "contributors": [],
   "devDependencies": {
-    "istanbul": "~0.2.8",
-    "jshint": "^2.5.6",
-    "opn": "^1.0.1",
-    "tap-dot": "^0.2.2",
-    "tap-spec": "~0.1.9",
-    "tape": "~3.4.0"
+    "eslint": "~0.24.1",
+    "istanbul": "~0.3.17",
+    "opn": "~3.0.2",
+    "tap-dot": "~1.0.0",
+    "tap-spec": "~4.0.2",
+    "tape": "~4.0.0"
   },
   "dependencies": {
-    "promise-polyfill": "^2.0.0"
+    "promise-polyfill": "~2.1.0"
   }
 }

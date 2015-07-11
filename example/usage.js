@@ -7,13 +7,13 @@ var request = eventuate()
 
 // consume all requests (think .on)
 function onRequest (req) {
-    // do something
+    console.log(req)
 }
 request(onRequest)
 
 // handle next event with a promise (think .once)
 request().then(function nextRequest (req) {
-    // do something
+    console.log(req)
 })
 
 // make sure someone is listening

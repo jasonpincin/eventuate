@@ -14,10 +14,6 @@ test('eventuate', function (t) {
         t.equal(consumerCallCount, 1, 'consumer1 should be called once')
         event.removeConsumer(consumer1)
     }
-    function consumer2 (value) {
-        t.equal(value, 'test1', 'consumer2 should be passed value')
-        event.removeConsumer(consumer2)
-    }
 
     t.equal(typeof event(consumer1), 'undefined', '(consumer) should return undefined')
     t.true(event.hasConsumer, 'has consumers after consumer added')
