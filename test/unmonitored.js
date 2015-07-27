@@ -2,7 +2,7 @@ var test      = require('tape'),
     eventuate = require('..')
 
 test('unmonitored eventuate', function (t) {
-    t.plan(7)
+    t.plan(4)
 
     var event = eventuate({ monitorConsumers: false })
     t.equal(event.hasConsumer, undefined, 'hasConsumer should be undefined')
@@ -17,13 +17,4 @@ test('unmonitored eventuate', function (t) {
 
     t.equal(typeof event(consumer1), 'undefined', '(consumer) should return undefined')
     event.produce('test1')
-
-    // promise
-    t.equal(typeof event().then, 'function', '() should return promise')
-    t.equal(event(), event(), '() should return same promise')
-
-    event().then(function (value) {
-        t.equal(value, 'test2', 'promise should resolve')
-    })
-    event.produce('test2')
 })

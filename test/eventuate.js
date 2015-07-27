@@ -2,7 +2,7 @@ var test      = require('tape'),
     eventuate = require('..')
 
 test('eventuate', function (t) {
-    t.plan(11)
+    t.plan(7)
 
     var event = eventuate()
     t.false(event.hasConsumer, 'has no consumers initially')
@@ -20,14 +20,5 @@ test('eventuate', function (t) {
     event.produce('test1')
     t.false(event.hasConsumer, 'has no consumers after consumer removed')
 
-    // promise
-    t.equal(typeof event().then, 'function', '() should return promise')
-    t.true(event.hasConsumer, 'has consumers with outstanding promise')
-    t.equal(event(), event(), '() should return same promise')
-
-    event().then(function (value) {
-        t.equal(value, 'test2', 'promise should resolve')
-    })
-    event.produce('test2')
-    t.false(event.hasConsumer, 'has no consumers after promise is resolved')
+    t.throws(event, 'requires a consuming function')
 })

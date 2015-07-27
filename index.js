@@ -1,56 +1,44 @@
-var Promise = require('promise-polyfill')
+var copy   = require('shallow-copy'),
+    assign = require('object-assign')
 
 module.exports = function mkEventuate (options) {
-    options = options || {}
-    options.monitorConsumers = options.monitorConsumers === undefined ? true : options.monitorConsumers
+    options = assign({
+        monitorConsumers: true,
+        requireConsumption: false
+    }, options)
 
-    var nextEvent  = null,
-        _nextEvent = null,
-        monitored  = options.monitorConsumers,
+    var monitored  = options.monitorConsumers,
         consumers  = []
 
     function eventuate (consumer) {
-        if (!consumer && nextEvent) return nextEvent
+        if (typeof consumer !== 'function') throw new TypeError('eventuate consumer must be a function')
 
-        if (consumer)
-            consumers.push(consumer)
-        else
-            nextEvent = nextEvent || (nextEvent = new Promise(function (resolve, reject) {
-                _nextEvent = {resolve: resolve, reject: reject}
-            }))
-
-        if (monitored)
-            eventuate.consumerAdded.produce(consumer)
-        if (!consumer)
-            return nextEvent
+        consumers.push(consumer)
+        if (monitored) eventuate.consumerAdded.produce(consumer)
     }
     eventuate.removeConsumer = function (consumer) {
         consumers.splice(consumers.indexOf(consumer), 1)
-        if (monitored)
-            eventuate.consumerRemoved.produce(consumer)
+        if (monitored) eventuate.consumerRemoved.produce(consumer)
     }
     eventuate.produce = function (data) {
         if (options.requireConsumption && !eventuate.hasConsumer)
-            throw ((data instanceof Error) ? data : new Error(data))
+            throw ((data instanceof Error) ? data : assign(new Error('Unconsumed eventuate'), { data: data }))
         consumers.forEach(function eventuateConsume(consume) {
             consume(data)
         })
-        if (_nextEvent) {
-            _nextEvent.resolve(data)
-            nextEvent = _nextEvent = null
-            if (monitored)
-                eventuate.consumerRemoved.produce()
-        }
     }
 
     if (monitored) {
         eventuate.consumerRemoved = mkEventuate({ monitorConsumers: false })
         eventuate.consumerAdded   = mkEventuate({ monitorConsumers: false })
 
-        Object.defineProperty(eventuate, 'hasConsumer', {
-            get: function eventuateHasConsumer () {
-                return !!(nextEvent || consumers.length)
-            }
+        Object.defineProperties(eventuate, {
+            hasConsumer: { get: function eventuateHasConsumer () {
+                return !!(consumers.length)
+            }},
+            consumers: { get: function eventuateConsumers () {
+                return copy(consumers)
+            }}
         })
     }
 
