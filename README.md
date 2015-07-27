@@ -3,7 +3,6 @@
 [![NPM version](https://badge.fury.io/js/eventuate.png)](http://badge.fury.io/js/eventuate)
 [![Build Status](https://travis-ci.org/jasonpincin/eventuate.svg?branch=master)](https://travis-ci.org/jasonpincin/eventuate)
 [![Coverage Status](https://coveralls.io/repos/jasonpincin/eventuate/badge.png?branch=master)](https://coveralls.io/r/jasonpincin/eventuate?branch=master)
-[![Davis Dependency Status](https://david-dm.org/jasonpincin/eventuate.png)](https://david-dm.org/jasonpincin/eventuate)
 
 Handle events without emitters. If we had to do it all over again, we might do it this way...
 
@@ -23,11 +22,6 @@ function onRequest (req) {
     // do something
 }
 request(onRequest)
-
-// handle next event with a promise (think .once)
-request().then(function nextRequest (req) {
-    // do something
-})
 
 // make sure someone is listening
 assert(request.hasConsumer)
@@ -59,15 +53,9 @@ Valid options are:
 
 Consume events with the `consumer` function, which should have the signature `function (data) {}`. When an event is produced, it will be passed to the consumer function as the first and only argument. 
 
-When invoked this way, the return value of `event()` is undefined.
-
-### var promise = event()
-
-When `event()` is invoked without a consumer, it returns a `Promise` object representing the next produced event.
-
 ### event.produce(data)
 
-Produce an event. All `event` consumer functions will be called with `data`, and the `Promise` representing the next event will be resolved with `data`. If the `requireConsumption` option was provided, and nothing consumes the data, an error will be thrown.
+Produce an event. All `event` consumer functions will be called with `data`. If the `requireConsumption` option was provided, and nothing consumes the data, an error will be thrown.
 
 ### event.removeConsumer(consumer)
 
@@ -75,52 +63,44 @@ Remove the formerly added `consumer`, so that it will not be called with future 
 
 ### event.hasConsumer
 
-Property containing value `true` or `false`, indicating whether or not the event has a consumer. This will also return true if there is an outstanding promise.
+Property containing value `true` or `false`, indicating whether or not the event has a consumer.
 
-### event.consumerAdded([consumer])
+### event.consumers
 
-Unmonitored eventuate representing additions of consumers. Any consumers of `consumerAdded` will be invoked with the consumer added to the `eventuate`. As this is an eventuate itself, it will return a promise that will resolve to the next consumer added if no `consumerAdded` consumer is provided.
+Property exposing a shallow copy of all consuming functions.
 
-If the consumer added to the `eventuate` was a promise, the consumer passed to the `consumerAdded` consumer will be undefined.
+### event.consumerAdded(consumer)
+
+Unmonitored eventuate representing additions of consumers. Any consumers of `consumerAdded` will be invoked with the consumer added to the `eventuate`.
 
 Example:
 
 ```javascript
 var event = eventuate()
 event.consumerAdded(function (eventConsumer) {
-    // eventConsumer will be a reference to consumer function, or 
-    // undefined if consumer is a promise
+    // eventConsumer will be the consumer function
     console.log('a consumer was added to event')
-})
-event.consumerAdded().then(function (eventConsumer) {
-    console.log('first consumer added to event')
 })
 ```
 
-### event.consumerRemoved([consumer])
+### event.consumerRemoved(consumer)
 
-Unmonitored eventuate representing removal of consumers. Any consumers of `consumerRemoved` will be invoked with the consumer removed from the `eventuate`. As this is an eventuate itself, it will return a promise that will resolve to the next consumer removed if no `consumerRemoved` consumer is provided.
-
-If the consumer removed from the `eventuate` was a promise, the consumer passed to the `consumerRemoved` consumer will be undefined.
+Unmonitored eventuate representing removal of consumers. Any consumers of `consumerRemoved` will be invoked with the consumer removed from the `eventuate`.
 
 Example:
 
 ```javascript
 var event = eventuate()
 event.consumerRemoved(function (eventConsumer) {
-    // eventConsumer will be a reference to consumer function, or 
-    // undefined if consumer is a promise
+    // eventConsumer will be the consumer function
     console.log('a consumer was removed from event')
-})
-event.consumerRemoved().then(function (eventConsumer) {
-    console.log('first time a consumer was removed from event')
 })
 ```
 
 
 ## unmonitored eventuate
 
-If the eventuate is created with the option `monitorConsumers` set to false, the eventuate will not have the following properties: `hasConsumer`, `consumerRemoved`, `consumerAdded`.  No events will be triggered when consumers are manipulated.  This is used internally within eventuate for sub-events such as `consumerRemoved` and `consumerAdded`.
+If the eventuate is created with the option `monitorConsumers` set to false, the eventuate will not have the following properties: `consumers`, `hasConsumer`, `consumerRemoved`, `consumerAdded`.  No events will be triggered when consumers are manipulated.  This is used internally within eventuate for sub-events such as `consumerRemoved` and `consumerAdded`.
 
 
 ## install
