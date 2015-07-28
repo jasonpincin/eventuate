@@ -30,8 +30,7 @@
   },
   "contributors": [],
   "devDependencies": {
-    "eslint": "~1.0.0-rc-3",
-    "eslint-config-standard": "~4.0.0-2",
+    "@jasonpincin/standard": "~5.0.0-6",
     "istanbul": "~0.3.17",
     "opn": "~1.0.2",
     "tap-dot": "~1.0.0",
