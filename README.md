@@ -102,6 +102,12 @@ event.consumerRemoved(function (eventConsumer) {
 
 If the eventuate is created with the option `monitorConsumers` set to false, the eventuate will not have the following properties: `consumers`, `hasConsumer`, `consumerRemoved`, `consumerAdded`.  No events will be triggered when consumers are manipulated.  This is used internally within eventuate for sub-events such as `consumerRemoved` and `consumerAdded`.
 
+## supporting modules
+
+The following modules support and extend the functionality of eventuate:
+
+* [eventuate-once](https://github.com/jasonpincin/eventuate-once) - act once (via callback or promise) upon the next occurrence of an eventuate
+* [eventuate-filter](https://github.com/jasonpincin/eventuate-filter) - create filtered eventuate, acting as subset of broader eventuate
 
 ## install
 
