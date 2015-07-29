@@ -31,6 +31,7 @@
   "contributors": [],
   "devDependencies": {
     "@jasonpincin/standard": "~5.0.0-6",
+    "eventuate-once": "~1.0.1",
     "istanbul": "~0.3.17",
     "opn": "~1.0.2",
     "tap-dot": "~1.0.0",

@@ -33,6 +33,8 @@ request.produce({ url: '/test' })
 request.removeConsumer(onRequest)
 ```
 
+See [example/compare.js](https://github.com/jasonpincin/eventuate/blob/master/example/compare.js) for more compare/contrast between `eventuate` and `EventEmitter`.
+
 
 ## api
 
