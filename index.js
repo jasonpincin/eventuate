@@ -27,6 +27,7 @@ module.exports = function mkEventuate (options) {
             consume(data)
         })
     }
+    eventuate.factory = mkEventuate
 
     if (monitored) {
         eventuate.consumerRemoved = mkEventuate({ monitorConsumers: false })
