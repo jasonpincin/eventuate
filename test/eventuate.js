@@ -2,7 +2,7 @@ var test      = require('tape'),
     eventuate = require('..')
 
 test('eventuate', function (t) {
-    t.plan(7)
+    t.plan(8)
 
     var event = eventuate()
     t.false(event.hasConsumer, 'has no consumers initially')
@@ -21,4 +21,6 @@ test('eventuate', function (t) {
     t.false(event.hasConsumer, 'has no consumers after consumer removed')
 
     t.throws(event, 'requires a consuming function')
+
+    t.equal(event.factory, eventuate, 'exposes factory as .factory')
 })
