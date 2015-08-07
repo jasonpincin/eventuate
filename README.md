@@ -99,6 +99,18 @@ event.consumerRemoved(function (eventConsumer) {
 })
 ```
 
+### event.factory
+
+Exposes the factory function used to create the eventuate. Example:
+
+```javascript
+var eventuate = require('eventuate'),
+    assert    = require('assert')
+
+var event = eventuate()
+assert(event.factory === eventuate)
+```
+
 
 ## unmonitored eventuate
 
