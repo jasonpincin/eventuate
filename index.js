@@ -20,6 +20,9 @@ module.exports = function mkEventuate (options) {
         consumers.splice(consumers.indexOf(consumer), 1)
         if (monitored) eventuate.consumerRemoved.produce(consumer)
     }
+    eventuate.removeAllConsumers = function () {
+        for (var i = consumers.length - 1; i >= 0; i--) eventuate.removeConsumer(consumers[i])
+    }
     eventuate.produce = function (data) {
         if (options.requireConsumption && !eventuate.hasConsumer)
             throw ((data instanceof Error) ? data : assign(new Error('Unconsumed eventuate'), { data: data }))

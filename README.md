@@ -63,6 +63,10 @@ Produce an event. All `event` consumer functions will be called with `data`. If 
 
 Remove the formerly added `consumer`, so that it will not be called with future produced events.
 
+### event.removeAllConsumers()
+
+Remove all consumers from the eventuate `event`.
+
 ### event.hasConsumer
 
 Property containing value `true` or `false`, indicating whether or not the event has a consumer.
