@@ -3,6 +3,7 @@
 [![NPM version](https://badge.fury.io/js/eventuate.png)](http://badge.fury.io/js/eventuate)
 [![Build Status](https://travis-ci.org/jasonpincin/eventuate.svg?branch=master)](https://travis-ci.org/jasonpincin/eventuate)
 [![Coverage Status](https://coveralls.io/repos/jasonpincin/eventuate/badge.png?branch=master)](https://coveralls.io/r/jasonpincin/eventuate?branch=master)
+[![Sauce Test Status](https://saucelabs.com/browser-matrix/jp-eventuate.svg)](https://saucelabs.com/u/jp-eventuate)
 
 Handle events without emitters. If we had to do it all over again, we might do it this way...
 
