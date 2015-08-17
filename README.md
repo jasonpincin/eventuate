@@ -133,16 +133,21 @@ The following modules support and extend the functionality of eventuate:
 npm install eventuate
 ```
 
-
 ## testing
 
-`npm test [--dot | --spec] [--grep=pattern]`
+`npm test [--dot | --spec] [--phantom] [--grep=pattern]`
 
 Specifying `--dot` or `--spec` will change the output from the default TAP style. 
+Specifying `--phantom` will cause the tests to run in the headless phantom browser instead of node.
 Specifying `--grep` will only run the test files that match the given pattern.
 
+### browser test
 
-## coverage
+`npm run browser-test`
+
+This will run the tests in all browsers (specified in .zuul.yml). Be sure to [educate zuul](https://github.com/defunctzombie/zuul/wiki/cloud-testing#2-educate-zuul) first.
+
+### coverage
 
 `npm run coverage [--html]`
 
