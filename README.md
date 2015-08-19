@@ -58,7 +58,7 @@ Consume events with the `consumer` function, which should have the signature `fu
 
 ### event.produce(data)
 
-Produce an event. All `event` consumer functions will be called with `data`. If the `requireConsumption` option was provided, and nothing consumes the data, an error will be thrown.
+Produce an event. All `event` consumer functions will be called with `data`. If the `requireConsumption` option was provided, and nothing consumes the data, an error will be thrown. In this case, if the data being produced is an instanceof `Error`, it will be thrown directly, otherwise an `UnconsumedEventError` (see below) will be thrown, and the data that was produced will be attached to the error as a `data` property.
 
 ### event.removeConsumer(consumer)
 
@@ -115,6 +115,10 @@ var eventuate = require('eventuate'),
 var event = eventuate()
 assert(event.factory === eventuate)
 ```
+
+### var UnconsumedEventError = require('eventuate/errors').UnconsumedEventError
+
+Constructor of error potentially thrown on eventuates with `requireConsumption` set.
 
 
 ## unmonitored eventuate

@@ -1,5 +1,6 @@
 var copy   = require('shallow-copy'),
-    assign = require('object-assign')
+    assign = require('object-assign'),
+    errors = require('./errors')
 
 module.exports = function mkEventuate (options) {
     options = assign({
@@ -25,7 +26,7 @@ module.exports = function mkEventuate (options) {
     }
     eventuate.produce = function (data) {
         if (options.requireConsumption && !eventuate.hasConsumer)
-            throw ((data instanceof Error) ? data : assign(new Error('Unconsumed eventuate'), { data: data }))
+            throw ((data instanceof Error) ? data : new UnconsumedEventError('Unconsumed event', { data: data }))
         consumers.forEach(function eventuateConsume (consume) {
             consume(data)
         })
@@ -48,3 +49,5 @@ module.exports = function mkEventuate (options) {
 
     return eventuate
 }
+
+var UnconsumedEventError = errors.UnconsumedEventError
