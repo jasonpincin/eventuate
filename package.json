@@ -26,18 +26,17 @@
   },
   "contributors": [],
   "devDependencies": {
-    "@jasonpincin/standard": "~5.0.0-6",
+    "@jasonpincin/standard": "~5.0.0-8",
     "eventuate-once": "~1.0.1",
     "istanbul": "~0.3.17",
     "opn": "~1.0.2",
+    "phantomjs": "~1.9.18",
     "tap-dot": "~1.0.0",
     "tap-spec": "~4.0.2",
     "tape": "~4.1.0",
-    "phantomjs": "~1.9.18",
     "zuul": "~3.2.0"
   },
   "dependencies": {
-    "@jasonpincin/standard": "~5.0.0-8",
     "define-error": "~1.0.0",
     "object-assign": "~3.0.0",
     "shallow-copy": "0.0.1"
