@@ -56,7 +56,7 @@ server.request.produce({ request: {}, response: {} })
 // Or... no constructors required!
 // It's more natural to create object literals with eventuates:
 server = {
-    ready: eventuate(),
+    ready     : eventuate(),
     connection: eventuate(),
-    request: eventuate()
+    request   : eventuate()
 }

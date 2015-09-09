@@ -4,7 +4,7 @@ var copy   = require('shallow-copy'),
 
 module.exports = function mkEventuate (options) {
     options = assign({
-        monitorConsumers: true,
+        monitorConsumers  : true,
         requireConsumption: false
     }, options)
 
