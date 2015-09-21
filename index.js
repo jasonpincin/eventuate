@@ -1,6 +1,9 @@
-var copy   = require('shallow-copy'),
-    assign = require('object-assign'),
-    errors = require('./errors')
+var copy      = require('shallow-copy'),
+    assign    = require('object-assign'),
+    errors    = require('./errors'),
+    map       = require('eventuate-map'),
+    reduce    = require('eventuate-reduce'),
+    filter    = require('eventuate-filter')
 
 module.exports = function mkEventuate (options) {
     options = assign({
@@ -31,6 +34,19 @@ module.exports = function mkEventuate (options) {
             consume(data)
         })
     }
+
+    eventuate.map = function(cb) {
+        return map(this, cb)
+    }
+
+    eventuate.reduce = function(cb, initialValue) {
+        return reduce(this, cb, initialValue)
+    }
+
+    eventuate.filter = function(cb) {
+        return filter(this, cb)
+    }
+
     eventuate.factory = mkEventuate
 
     if (monitored) {
