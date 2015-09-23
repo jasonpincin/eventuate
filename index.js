@@ -5,7 +5,7 @@ var copy                 = require('shallow-copy'),
     filter               = require('eventuate-filter'),
     UnconsumedEventError = require('./errors').UnconsumedEventError
 
-module.exports = function mkEventuate (options) {
+module.exports = function createEventuate (options) {
     options = assign({
         monitorConsumers  : true,
         requireConsumption: false
@@ -50,11 +50,11 @@ module.exports = function mkEventuate (options) {
         return filter(eventuate, cb)
     }
 
-    eventuate.factory = mkEventuate
+    eventuate.factory = createEventuate
 
     if (monitored) {
-        eventuate.consumerRemoved = mkEventuate({ monitorConsumers: false })
-        eventuate.consumerAdded   = mkEventuate({ monitorConsumers: false })
+        eventuate.consumerRemoved = createEventuate({ monitorConsumers: false })
+        eventuate.consumerAdded   = createEventuate({ monitorConsumers: false })
 
         Object.defineProperties(eventuate, {
             hasConsumer: { get: function eventuateHasConsumer () {
