@@ -1,9 +1,9 @@
-var copy      = require('shallow-copy'),
-    assign    = require('object-assign'),
-    errors    = require('./errors'),
-    map       = require('eventuate-map'),
-    reduce    = require('eventuate-reduce'),
-    filter    = require('eventuate-filter')
+var copy                 = require('shallow-copy'),
+    assign               = require('object-assign'),
+    map                  = require('eventuate-map'),
+    reduce               = require('eventuate-reduce'),
+    filter               = require('eventuate-filter'),
+    UnconsumedEventError = require('./errors').UnconsumedEventError
 
 module.exports = function mkEventuate (options) {
     options = assign({
@@ -68,5 +68,3 @@ module.exports = function mkEventuate (options) {
 
     return eventuate
 }
-
-var UnconsumedEventError = errors.UnconsumedEventError
