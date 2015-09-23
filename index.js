@@ -39,15 +39,15 @@ module.exports = function mkEventuate (options) {
     }
 
     eventuate.map = function (cb) {
-        return map(this, cb)
+        return map(eventuate, cb)
     }
 
     eventuate.reduce = function (cb, initialValue) {
-        return reduce(this, cb, initialValue)
+        return reduce(eventuate, cb, initialValue)
     }
 
     eventuate.filter = function (cb) {
-        return filter(this, cb)
+        return filter(eventuate, cb)
     }
 
     eventuate.factory = mkEventuate
