@@ -20,13 +20,16 @@ module.exports = function mkEventuate (options) {
         consumers.push(consumer)
         if (monitored) eventuate.consumerAdded.produce(consumer)
     }
+
     eventuate.removeConsumer = function (consumer) {
         consumers.splice(consumers.indexOf(consumer), 1)
         if (monitored) eventuate.consumerRemoved.produce(consumer)
     }
+
     eventuate.removeAllConsumers = function () {
         for (var i = consumers.length - 1; i >= 0; i--) eventuate.removeConsumer(consumers[i])
     }
+
     eventuate.produce = function (data) {
         if (options.requireConsumption && !eventuate.hasConsumer)
             throw ((data instanceof Error) ? data : new UnconsumedEventError('Unconsumed event', { data: data }))
@@ -35,15 +38,15 @@ module.exports = function mkEventuate (options) {
         })
     }
 
-    eventuate.map = function(cb) {
+    eventuate.map = function (cb) {
         return map(this, cb)
     }
 
-    eventuate.reduce = function(cb, initialValue) {
+    eventuate.reduce = function (cb, initialValue) {
         return reduce(this, cb, initialValue)
     }
 
-    eventuate.filter = function(cb) {
+    eventuate.filter = function (cb) {
         return filter(this, cb)
     }
 
