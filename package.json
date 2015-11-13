@@ -27,26 +27,34 @@
   "contributors": [],
   "devDependencies": {
     "@jasonpincin/standard": "~5.0.0-8",
-    "eventuate-once": "~1.0.1",
-    "istanbul": "~0.3.17",
+    "faucet": "0.0.1",
+    "istanbul": "~0.4.0",
     "opn": "~1.0.2",
+    "snazzy": "~2.0.1",
+    "tape": "~4.2.1",
     "phantomjs": "~1.9.18",
-    "tap-dot": "~1.0.0",
-    "tap-spec": "~4.0.2",
-    "tape": "~4.1.0",
-    "zuul": "~3.2.0"
+    "zuul": "~3.7.2"
   },
   "dependencies": {
-    "define-error": "~1.0.0",
-    "eventuate-filter": "^3.0.0",
-    "eventuate-map": "^1.0.1",
-    "eventuate-reduce": "^1.0.0",
-    "object-assign": "~3.0.0",
+    "define-error": "~1.1.0",
+    "eventuate-core": "~4.0.1",
+    "eventuate-filter": "~4.2.0",
+    "object-assign": "~4.0.1",
     "shallow-copy": "0.0.1"
   },
   "scripts": {
-    "test": "make npm-test",
-    "coverage": "make npm-coverage",
-    "browser-test": "make browser-test"
+    "test": "npm run -s faucet && npm run -s lint && npm run -s check-cover",
+    "test-nocover": "npm run -s faucet-nocover && npm run -s lint",
+    "travis-test": "npm run -s tap && ((cat coverage/lcov.info | coveralls) || exit 0)",
+    "travis-browser-test": "zuul -- test/*.js",
+    "faucet": "istanbul cover --report lcov --print none -- tape test/*.js | faucet",
+    "faucet-nocover": "tape test/**/*.js | faucet",
+    "tap": "istanbul cover --report lcov --print none -- tape test/*.js",
+    "tap-nocover": "tape test/**/*.js",
+    "phantom": "zuul --phantom -- test/*.js | faucet",
+    "lint": "standard | snazzy",
+    "check-cover": "istanbul check-coverage --statements 100 --branches 100 --functions 100 --lines 100 2>&1 | grep ERROR: ; (test ${PIPESTATUS[0]} -eq 0) || (istanbul report text; exit 1)",
+    "view-cover": "istanbul report text",
+    "open-cover": "open coverage/lcov-report/index.html"
   }
 }
