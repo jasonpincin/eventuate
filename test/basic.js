@@ -1,8 +1,8 @@
-var test      = require('tape'),
-    eventuate = require('..')
+var test           = require('tape'),
+    basicEventuate = require('..')
 
-test('eventuate can be created', function (t) {
-    var event = eventuate()
+test('basic eventuate can be created', function (t) {
+    var event = basicEventuate()
     t.equal(typeof event, 'function')
     t.ok(event.filter, 'has filter')
     t.ok(event.forEach, 'has forEach')

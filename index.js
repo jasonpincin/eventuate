@@ -1,70 +1,57 @@
-var copy                 = require('shallow-copy'),
-    assign               = require('object-assign'),
-    map                  = require('eventuate-map'),
-    reduce               = require('eventuate-reduce'),
-    filter               = require('eventuate-filter'),
-    UnconsumedEventError = require('./errors').UnconsumedEventError
+var eventuateCore = require('eventuate-core'),
+    pre           = require('call-hook/pre'),
+    evFilter      = require('eventuate-filter'),
+    evNext        = require('eventuate-next')
+    // evMap      = require('eventuate-map'),
+    // evReduce   = require('eventuate-reduce'),
 
-module.exports = function createEventuate (options) {
-    options = assign({
-        monitorConsumers  : true,
-        requireConsumption: false
-    }, options)
+module.exports = createEventuate
 
-    var monitored  = options.monitorConsumers,
-        consumers  = []
-
-    function eventuate (consumer) {
-        if (typeof consumer !== 'function') throw new TypeError('eventuate consumer must be a function')
-
-        consumers.push(consumer)
-        if (monitored) eventuate.consumerAdded.produce(consumer)
-    }
-
-    eventuate.removeConsumer = function (consumer) {
-        consumers.splice(consumers.indexOf(consumer), 1)
-        if (monitored) eventuate.consumerRemoved.produce(consumer)
-    }
-
-    eventuate.removeAllConsumers = function () {
-        for (var i = consumers.length - 1; i >= 0; i--) eventuate.removeConsumer(consumers[i])
-    }
-
-    eventuate.produce = function (data) {
-        if (options.requireConsumption && !eventuate.hasConsumer)
-            throw ((data instanceof Error) ? data : new UnconsumedEventError('Unconsumed event', { data: data }))
-        consumers.forEach(function eventuateConsume (consume) {
-            consume(data)
-        })
-    }
-
-    eventuate.map = function (cb) {
-        return map(eventuate, cb)
-    }
-
-    eventuate.reduce = function (cb, initialValue) {
-        return reduce(eventuate, cb, initialValue)
-    }
-
-    eventuate.filter = function (cb) {
-        return filter(eventuate, cb)
-    }
-
-    eventuate.factory = createEventuate
-
-    if (monitored) {
-        eventuate.consumerRemoved = createEventuate({ monitorConsumers: false })
-        eventuate.consumerAdded   = createEventuate({ monitorConsumers: false })
-
-        Object.defineProperties(eventuate, {
-            hasConsumer: { get: function eventuateHasConsumer () {
-                return !!(consumers.length)
-            }},
-            consumers: { get: function eventuateConsumers () {
-                return copy(consumers)
-            }}
-        })
-    }
+function createEventuate (options) {
+    var eventuate             = decorate(eventuateCore(options))
+    eventuate.errors          = decorate(eventuateCore())
+    eventuate.consumerAdded   = decorate(eventuateCore())
+    eventuate.consumerRemoved = decorate(eventuateCore())
+    eventuate.done            = oneTime(eventuateCore())
+    eventuate.factory         = createEventuate
 
     return eventuate
+}
+
+function decorate (eventuate) {
+    eventuate.filter  = filter
+    // eventuate.map     = map
+    // eventuate.reduce  = reduce
+    eventuate.next    = next
+    eventuate.once    = next
+    eventuate.forEach = forEach
+
+    return eventuate
+
+    function filter (options, filterFunc) {
+        return evFilter(eventuate, options, filterFunc)
+    }
+
+    // function map (options, mapFunc) {
+    //     return evMap(eventuate, options, mapFunc)
+    // }
+    //
+    // function reduce (options, reduceFunc) {
+    //     return evReduce(eventuate, options, reduceFunc)
+    // }
+    //
+    function next (cb) {
+        return evNext(eventuate, cb)
+    }
+
+    function forEach (consumer) {
+        return eventuate.consume(consumer)
+    }
+}
+
+function oneTime (eventuate) {
+    eventuate.consume = pre(eventuate.consume, function (consumer) {
+        if (!consumer)
+            this.abort(evNext(eventuate))
+    })
 }
