@@ -39,7 +39,7 @@
     "call-hook": "~2.1.0",
     "define-error": "~1.1.0",
     "eventuate-core": "~4.0.2",
-    "eventuate-filter": "~4.2.2",
+    "eventuate-filter": "~4.3.0",
     "object-assign": "~4.0.1",
     "shallow-copy": "0.0.1"
   },
