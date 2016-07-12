@@ -128,12 +128,12 @@ Return a new eventuate which is a filtered subset of `event`. See
 ### newEventuate = event.map(mapFunc)
 
 Return a new eventuate which produces transformed data of `event`. See
-[eventuate-map](https://github.com/georgettepincin/eventuate-map).
+[eventuate-map](https://github.com/Georgette/eventuate-map).
 
 ### newEventuate = event.reduce(reduceFunc)
 
 Return a new eventuate which produces on-goin reduced data of `event`. See
-[eventuate-reduce](https://github.com/georgettepincin/eventuate-reduce).
+[eventuate-reduce](https://github.com/Georgette/eventuate-reduce).
 
 ### var UnconsumedEventError = require('eventuate/errors').UnconsumedEventError
 
