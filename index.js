@@ -50,6 +50,11 @@ module.exports = function createEventuate (options) {
         return filter(eventuate, cb)
     }
 
+    eventuate.forEach = function (cb) {
+        eventuate(cb)
+        return eventuate
+    }
+
     eventuate.factory = createEventuate
 
     if (monitored) {

@@ -37,8 +37,7 @@
   },
   "dependencies": {
     "define-error": "~1.1.0",
-    "eventuate-core": "~4.0.1",
-    "eventuate-filter": "~4.2.0",
+    "eventuate-filter": "~3.0.0",
     "eventuate-map": "~1.0.1",
     "eventuate-reduce": "~1.0.0",
     "object-assign": "~4.1.0",
