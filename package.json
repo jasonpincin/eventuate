@@ -24,7 +24,9 @@
     "email": "jason@pincin.com",
     "url": "http://jason.pincin.com/"
   },
-  "contributors": [],
+  "contributors": [
+    "Gege Pingin <gege@pincin.com> (https://github.com/Georgette)"
+  ],
   "devDependencies": {
     "@jasonpincin/standard": "~5.0.0-8",
     "faucet": "0.0.1",
