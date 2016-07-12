@@ -9,8 +9,8 @@ before_install:
 before_script:
 - npm install -g coveralls@2.10.0
 script:
-- make travis-test
-- '[ "${TRAVIS_NODE_VERSION}" = "0.12" ] && travis_wait make browser-test || true'
+- npm run travis-test
+- '[ "${TRAVIS_NODE_VERSION}" = "0.12" ] && travis_wait npm run travis-browser-test || true'
 env:
   global:
   - secure: fYSZZ6t7UdVUZk0zbz5tnHWfHy1FuLmYoNBzwy1jN7kvZekmCEeqR8YugngS/cy7ZW7ewwGyrb6iSISG/NlnofYmFAV1vJ58qOfpBnJSBqGQVFC4njgrH+aRCUEumYSdi74hhCtk4clFC9nKkAGRenk5OQA+VgDc4hRZnjWIy3Y=
