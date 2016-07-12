@@ -56,6 +56,10 @@ Valid options are:
 
 Consume events with the `consumer` function, which should have the signature `function (data) {}`. When an event is produced, it will be passed to the consumer function as the first and only argument. 
 
+### event.forEach(consumer)
+
+Alias for `event(consumer)` as described above.
+
 ### event.produce(data)
 
 Produce an event. All `event` consumer functions will be called with `data`. If the `requireConsumption` option was provided, and nothing consumes the data, an error will be thrown. In this case, if the data being produced is an instanceof `Error`, it will be thrown directly, otherwise an `UnconsumedEventError` (see below) will be thrown, and the data that was produced will be attached to the error as a `data` property.
@@ -115,6 +119,21 @@ var eventuate = require('eventuate'),
 var event = eventuate()
 assert(event.factory === eventuate)
 ```
+
+### newEventuate = event.filter(filterFunc)
+
+Return a new eventuate which is a filtered subset of `event`. See
+[eventuate-filter](https://github.com/jasonpincin/eventuate-filter).
+
+### newEventuate = event.map(mapFunc)
+
+Return a new eventuate which produces transformed data of `event`. See
+[eventuate-map](https://github.com/georgettepincin/eventuate-map).
+
+### newEventuate = event.reduce(reduceFunc)
+
+Return a new eventuate which produces on-goin reduced data of `event`. See
+[eventuate-reduce](https://github.com/georgettepincin/eventuate-reduce).
 
 ### var UnconsumedEventError = require('eventuate/errors').UnconsumedEventError
 
